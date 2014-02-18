@@ -1,0 +1,4 @@
+#!/bin/bash
+# Continuous Integration build script.
+
+echo "It works."
