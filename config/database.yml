@@ -1,0 +1,15 @@
+common: &common
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *common
+  database: rails4_template_development
+
+test: &test
+  <<: *common
+  database: rails4_template_test
+
+cucumber:
+  <<: *test
