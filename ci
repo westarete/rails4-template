@@ -1,11 +1,20 @@
 #!/bin/bash
 # Continuous Integration build script.
 
-echo '========== Set Up RVM ==============================================='
+echo '========== Set Up RVM =================================================='
 export PATH=$PATH:~/.rvm/bin
 source ~/.rvm/scripts/rvm
 rvm use `cat .ruby-version`
 set -e # Exit on any error
 set -x # Echo each command
 
-echo "It works."
+echo '========== Install Gems ================================================'
+bundle install --no-color --local
+
+echo '========== Prepare Database ============================================'
+bundle exec rake db:create:all
+bundle exec rake db:migrate
+bundle exec rake db:test:clone
+
+echo '========== Acceptance Tests ============================================'
+bundle exec cucumber --no-color
